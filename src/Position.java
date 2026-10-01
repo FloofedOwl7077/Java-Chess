@@ -1,6 +1,6 @@
 package src;
 
-public class PiecePosition {
+public class Position {
     private int row;
     private int column;
 
