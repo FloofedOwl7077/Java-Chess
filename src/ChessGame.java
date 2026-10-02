@@ -43,6 +43,21 @@ public class ChessGame {
         return false;
     }
 
+    private boolean wouldBeInCheckAfterMove(PieceColor kingColor, Position from, Position to) {
+        // Simulate the move temporarily
+        Piece temp = board.getPiece(to.getRow(), to.getColumn());
+        board.setPiece(to.getRow(), to.getColumn(), board.getPiece(from.getRow(), from.getColumn()));
+        board.setPiece(from.getRow(), from.getColumn(), null);
+
+        boolean inCheck = isInCheck(kingColor);
+
+        // Undo the move
+        board.setPiece(from.getRow(), from.getColumn(), board.getPiece(to.getRow(), to.getColumn()));
+        board.setPiece(to.getRow(), to.getColumn(), temp);
+
+        return inCheck;
+    }
+
     private Position findKingPosition(PieceColor color) {
         for (int row = 0; row < board.getBoard().length; row++) {
             for (int col = 0; col < board.getBoard()[row].length; col++) {
