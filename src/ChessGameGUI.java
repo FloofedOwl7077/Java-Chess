@@ -69,11 +69,19 @@ public class ChessGameGUI extends JFrame{
     }
 
     private void handleSquareClick(int row, int col) {
-
+        if (game.handleSquareSelection(row, col)) {
+            refreshBoard();
+            checkGameState();
+        }
     }
 
     private void checkGameState() {
+        PieceColor currentPlayer = game.getCurrentPlayerColor(); // This method should return the current player's color
+        boolean inCheck = game.isInCheck(currentPlayer);
 
+        if(inCheck) {
+            JOptionPane.showMessageDialog(this, currentPlayer + "is in check!");
+        }
     }
 
     public static void main(String[] args) {
