@@ -108,6 +108,16 @@ public class ChessGameGUI extends JFrame{
         }
     }
 
+    private void addGameResetOption() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu gameMenu = new JMenu("Game");
+        JMenuItem resetItem = new JMenuItem("Reset");
+        resetItem.addActionListener(e -> resetGame());
+        gameMenu.add(resetItem);
+        menuBar.add(gameMenu);
+        setJMenuBar(menuBar);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(ChessGameGUI::new);
     }
