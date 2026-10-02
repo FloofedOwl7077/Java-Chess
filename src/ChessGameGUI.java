@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class ChessGameGUI extends JFrame{
     private final ChessSquareComponent[][] squares = new ChessSquareComponent[8][8];
@@ -72,6 +73,13 @@ public class ChessGameGUI extends JFrame{
         if (game.handleSquareSelection(row, col)) {
             refreshBoard();
             checkGameState();
+        }
+    }
+
+    private void highlightLegalMoves(Position position) {
+        List<Position> legalMoves = game.getLegalMovesForPieceAt(position);
+        for (Position move : legalMoves) {
+            squares[move.getRow()][move.getColumn()].setBackground(color.CYAN);
         }
     }
 
