@@ -22,4 +22,31 @@ public class ChessGame {
         }
         return false;
     }
+
+    public boolean inInCheck(PieceColor kingColor) {
+        Position kingPosition = findKingPosition(kingColor);
+        for (int row = 0; row < board.getBoard().length; row++) {
+            for (int col = 0; col < board.getBoard()[row].length; col++) {
+                Piece piece = board.getPiece(row, col);
+                if (piece != null && piece.getColor() != kingColor()) {
+                    if (piece.isValidMove(kingPosition, board.getBoard())) {
+                        return true; // An opposing piece can capture the king
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private Position findKingPosition(PieceColor color) {
+        for (int row = 0; row < board.getBoard().length; row++) {
+            for (int col = 0; col < board.getBoard()[row].length; col++) {
+                Piece piece = board.getPiece(row, col);
+                if (piece instanceof King && piece.getColor() == color) {
+                    return new Position(row, col);
+                }
+            }
+        }
+        throw new RuntimeException("King not found, which should never happen.");
+    }
 }
