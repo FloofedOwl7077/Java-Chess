@@ -70,16 +70,24 @@ public class ChessGameGUI extends JFrame{
     }
 
     private void handleSquareClick(int row, int col) {
-        if (game.handleSquareSelection(row, col)) {
+        clearHighlights();
+        if (moveResult) {
+            // If a move was made, refresh and check game state without highlighting new
+            // moves
             refreshBoard();
             checkGameState();
+            checkGameOver();
+        } else if (game.isPieceSelected()) {
+            // If no move was made but a piece is selected, highlight its legal moves
+            highlightLegalMoves(new Position(row, col));
         }
+        refreshBoard();
     }
 
     private void highlightLegalMoves(Position position) {
         List<Position> legalMoves = game.getLegalMovesForPieceAt(position);
         for (Position move : legalMoves) {
-            squares[move.getRow()][move.getColumn()].setBackground(color.CYAN);
+            squares[move.getRow()][move.getColumn()].setBackground(Color.CYAN);
         }
     }
 
