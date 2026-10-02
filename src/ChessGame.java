@@ -49,4 +49,32 @@ public class ChessGame {
         }
         throw new RuntimeException("King not found, which should never happen.");
     }
+
+    public boolean isCheckmate(PieceColor kingColor) {
+        if (!isInCheck(kingColor)) {
+            return false; // Not in check, so cannot be checkmate
+        }
+
+        Position kingPosition = findKingPosition(kingColor);
+        King king = (King) board.getPiece(kingPosition.getRow(), kingPosition.getColumn());
+
+        // Attempt to find a move that gets the king out of check
+        for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+            for (int colOffset = -1; colOffset <= 1; colOffset++) {
+                if (rowOffset == 0 && colOffset == 0) {
+                    continue; // Skip the current position of the king.
+                }
+                Position newPosition = new Position(kingPosition.getRow() + rowOffset,
+                        kingPosition.getColumn() + colOffset);
+                // Check if moving the king to the new position is a legal move and does not
+                // result in a check.
+                if (isPositionOnBoard(newPosition) && king.isValidMove(newPosition, board.getBoard())
+                        && !wouldBeInCheckAfterMove(kingColor, kingPosition, newPosition)) {
+                    return false; // Found a move that gets the king out of check, so its not checkmate
+                }
+            }
+        }
+        
+        return true;
+    }
 }
