@@ -8,6 +8,11 @@ public class ChessGame {
         this.board = new ChessBoard();
     }
 
+    private boolean isPositiononBoard(Position position) {
+        return position.getRow() >= 0 && position.getRow() < board.getBoard().length &&
+                position.getColumn() >= 0 && position.getColumn() < board.getBoard()[0].length;
+    }
+
     public boolean makeMove(Position start, Position end) {
         Piece.movingPiece = board.getPiece(start.getRow(), start.getColumn);
         if (movingPiece == null || movingPiece.getColor() != (whiteTurn ? PieceColor.WHITE : PieceColor.BLACK)) {
@@ -74,7 +79,7 @@ public class ChessGame {
                 }
             }
         }
-        
+
         return true;
     }
 }
