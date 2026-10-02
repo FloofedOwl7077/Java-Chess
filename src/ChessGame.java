@@ -97,4 +97,17 @@ public class ChessGame {
 
         return true;
     }
+
+    public ChessBoard getBoard() {
+        return this.board;
+    }
+
+    public void resetGame() {
+        this.board = new ChessBoard(); // Re-initialize the board
+        this.whiteTurn = true; // reset turn to white
+    }
+
+    public PieceColor getCurrentPlayerColor() {
+        return whiteTurn ? PieceColor.WHITE : PieceColor.BLACK;
+    }
 }
