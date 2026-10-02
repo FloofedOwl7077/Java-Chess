@@ -28,6 +28,7 @@ public class ChessGameGUI extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(8, 8));
         initializeBoard();
+        addGameResetOption();
         pack(); // Adjust window size to fit the chessboard
         setVisible(true);
     }
@@ -116,6 +117,23 @@ public class ChessGameGUI extends JFrame{
         gameMenu.add(resetItem);
         menuBar.add(gameMenu);
         setJMenuBar(menuBar);
+    }
+
+    private void resetGame() {
+        game.resetGame();
+        refreshBoard();
+    }
+
+    private void checkGameOver() {
+        if (game.isCheckmate(game.getCurrentPlayerColor())) {
+            int response = JOptionPane.showConfirmDialog(this, "Checkmate! Would you ike to play again?", "Game Over",
+                    JOptionPane.YES_NO_OPTION);
+            if (response == JOptionPane.YES_OPTION) {
+                resetGame();
+            } else {
+                System.exit(0);
+            }
+        }
     }
 
     public static void main(String[] args) {
