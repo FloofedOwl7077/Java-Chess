@@ -83,6 +83,14 @@ public class ChessGameGUI extends JFrame{
         }
     }
 
+    private void clearHighlights() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                squares[row][col].setBackground((row + col) % 2 == 0 ? new Color(255, 255, 225) : new Color(123, 205, 44));
+            }
+        }
+    }
+
     private void checkGameState() {
         PieceColor currentPlayer = game.getCurrentPlayerColor(); // This method should return the current player's color
         boolean inCheck = game.isInCheck(currentPlayer);
